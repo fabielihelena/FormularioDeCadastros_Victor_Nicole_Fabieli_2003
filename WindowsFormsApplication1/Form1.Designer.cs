@@ -42,8 +42,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.idade = new System.Windows.Forms.TextBox();
-            this.sangue = new System.Windows.Forms.TextBox();
-            this.civil = new System.Windows.Forms.TextBox();
             this.filhos = new System.Windows.Forms.TextBox();
             this.endereco = new System.Windows.Forms.TextBox();
             this.telefone = new System.Windows.Forms.TextBox();
@@ -64,8 +62,12 @@
             this.age = new System.Windows.Forms.Label();
             this.name = new System.Windows.Forms.Label();
             this.kids = new System.Windows.Forms.Label();
-            this.sexo = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
+            this.sexo = new System.Windows.Forms.ComboBox();
+            this.sangue = new System.Windows.Forms.ComboBox();
+            this.civil = new System.Windows.Forms.ComboBox();
+            this.message = new System.Windows.Forms.Label();
+            this.editar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBox1
@@ -87,6 +89,8 @@
             this.nome.Name = "nome";
             this.nome.Size = new System.Drawing.Size(350, 20);
             this.nome.TabIndex = 1;
+            this.nome.Tag = "Nome";
+            this.nome.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.pressionouTecla);
             // 
             // label1
             // 
@@ -96,6 +100,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(49, 17);
             this.label1.TabIndex = 2;
+            this.label1.Tag = "Nome";
             this.label1.Text = "Nome:";
             // 
             // label2
@@ -106,6 +111,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(47, 17);
             this.label2.TabIndex = 3;
+            this.label2.Tag = "Idade";
             this.label2.Text = "Idade:";
             // 
             // label3
@@ -116,6 +122,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(43, 17);
             this.label3.TabIndex = 4;
+            this.label3.Tag = "Sexo";
             this.label3.Text = "Sexo:";
             // 
             // label4
@@ -126,6 +133,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(71, 17);
             this.label4.TabIndex = 5;
+            this.label4.Tag = "Profissao";
             this.label4.Text = "Profissão:";
             // 
             // label5
@@ -136,6 +144,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(56, 17);
             this.label5.TabIndex = 6;
+            this.label5.Tag = "Salario";
             this.label5.Text = "Salário:";
             // 
             // label6
@@ -146,6 +155,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(85, 17);
             this.label6.TabIndex = 7;
+            this.label6.Tag = "Civil";
             this.label6.Text = "Estado Civil:";
             // 
             // label7
@@ -156,6 +166,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 17);
             this.label7.TabIndex = 8;
+            this.label7.Tag = "Filhos";
             this.label7.Text = "Filhos:";
             // 
             // label8
@@ -166,6 +177,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(112, 17);
             this.label8.TabIndex = 9;
+            this.label8.Tag = "Sangue";
             this.label8.Text = "Tipo Sanguíneo:";
             // 
             // label9
@@ -176,6 +188,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(68, 17);
             this.label9.TabIndex = 10;
+            this.label9.Tag = "Telefone";
             this.label9.Text = "Telefone:";
             // 
             // label10
@@ -186,6 +199,7 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(51, 17);
             this.label10.TabIndex = 11;
+            this.label10.Tag = "Email";
             this.label10.Text = "E-mail:";
             // 
             // label11
@@ -196,6 +210,7 @@
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(73, 17);
             this.label11.TabIndex = 12;
+            this.label11.Tag = "Endereco";
             this.label11.Text = "Endereço:";
             // 
             // idade
@@ -206,24 +221,8 @@
             this.idade.Name = "idade";
             this.idade.Size = new System.Drawing.Size(51, 20);
             this.idade.TabIndex = 13;
-            // 
-            // sangue
-            // 
-            this.sangue.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.sangue.Location = new System.Drawing.Point(360, 73);
-            this.sangue.Multiline = true;
-            this.sangue.Name = "sangue";
-            this.sangue.Size = new System.Drawing.Size(65, 20);
-            this.sangue.TabIndex = 15;
-            // 
-            // civil
-            // 
-            this.civil.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.civil.Location = new System.Drawing.Point(103, 101);
-            this.civil.Multiline = true;
-            this.civil.Name = "civil";
-            this.civil.Size = new System.Drawing.Size(133, 20);
-            this.civil.TabIndex = 16;
+            this.idade.Tag = "Idade";
+            this.idade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.pressionouTecla);
             // 
             // filhos
             // 
@@ -233,6 +232,8 @@
             this.filhos.Name = "filhos";
             this.filhos.Size = new System.Drawing.Size(51, 20);
             this.filhos.TabIndex = 17;
+            this.filhos.Tag = "Filhos";
+            this.filhos.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.pressionouTecla);
             // 
             // endereco
             // 
@@ -242,6 +243,8 @@
             this.endereco.Name = "endereco";
             this.endereco.Size = new System.Drawing.Size(326, 20);
             this.endereco.TabIndex = 18;
+            this.endereco.Tag = "Endereco";
+            this.endereco.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.pressionouTecla);
             // 
             // telefone
             // 
@@ -251,6 +254,8 @@
             this.telefone.Name = "telefone";
             this.telefone.Size = new System.Drawing.Size(133, 20);
             this.telefone.TabIndex = 19;
+            this.telefone.Tag = "Telefone";
+            this.telefone.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.pressionouTecla);
             // 
             // profissao
             // 
@@ -260,15 +265,19 @@
             this.profissao.Name = "profissao";
             this.profissao.Size = new System.Drawing.Size(133, 20);
             this.profissao.TabIndex = 20;
+            this.profissao.Tag = "Profissao";
+            this.profissao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.pressionouTecla);
             // 
             // email
             // 
             this.email.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.email.Location = new System.Drawing.Point(99, 205);
+            this.email.Location = new System.Drawing.Point(98, 205);
             this.email.Multiline = true;
             this.email.Name = "email";
             this.email.Size = new System.Drawing.Size(326, 20);
             this.email.TabIndex = 21;
+            this.email.Tag = "Email";
+            this.email.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.pressionouTecla);
             // 
             // salario
             // 
@@ -278,6 +287,8 @@
             this.salario.Name = "salario";
             this.salario.Size = new System.Drawing.Size(116, 20);
             this.salario.TabIndex = 22;
+            this.salario.Tag = "Salario";
+            this.salario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.pressionouTecla);
             // 
             // button1
             // 
@@ -422,15 +433,6 @@
             this.kids.TabIndex = 36;
             this.kids.Text = "Filhos";
             // 
-            // sexo
-            // 
-            this.sexo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.sexo.Location = new System.Drawing.Point(181, 73);
-            this.sexo.Multiline = true;
-            this.sexo.Name = "sexo";
-            this.sexo.Size = new System.Drawing.Size(51, 20);
-            this.sexo.TabIndex = 14;
-            // 
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
@@ -442,11 +444,88 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.Reset);
             // 
+            // sexo
+            // 
+            this.sexo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sexo.FormattingEnabled = true;
+            this.sexo.Items.AddRange(new object[] {
+            "M",
+            "F",
+            "H"});
+            this.sexo.Location = new System.Drawing.Point(171, 74);
+            this.sexo.Name = "sexo";
+            this.sexo.Size = new System.Drawing.Size(65, 21);
+            this.sexo.TabIndex = 38;
+            this.sexo.Tag = "Sexo";
+            this.sexo.SelectedIndexChanged += new System.EventHandler(this.indexChanged);
+            // 
+            // sangue
+            // 
+            this.sangue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sangue.FormattingEnabled = true;
+            this.sangue.Items.AddRange(new object[] {
+            "A+",
+            "A-",
+            "B+",
+            "B-",
+            "AB+",
+            "AB-",
+            "O+",
+            "O-"});
+            this.sangue.Location = new System.Drawing.Point(352, 76);
+            this.sangue.Name = "sangue";
+            this.sangue.Size = new System.Drawing.Size(73, 21);
+            this.sangue.TabIndex = 39;
+            this.sangue.Tag = "Sangue";
+            this.sangue.SelectedIndexChanged += new System.EventHandler(this.indexChanged);
+            // 
+            // civil
+            // 
+            this.civil.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.civil.FormattingEnabled = true;
+            this.civil.Items.AddRange(new object[] {
+            "Solteiro",
+            "Casado",
+            "Viúvo",
+            "Divorciado"});
+            this.civil.Location = new System.Drawing.Point(104, 101);
+            this.civil.Name = "civil";
+            this.civil.Size = new System.Drawing.Size(128, 21);
+            this.civil.TabIndex = 40;
+            this.civil.Tag = "Civil";
+            this.civil.SelectedIndexChanged += new System.EventHandler(this.indexChanged);
+            // 
+            // message
+            // 
+            this.message.AutoSize = true;
+            this.message.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.message.Location = new System.Drawing.Point(77, 9);
+            this.message.Name = "message";
+            this.message.Size = new System.Drawing.Size(0, 17);
+            this.message.TabIndex = 41;
+            this.message.Tag = "Nome";
+            // 
+            // editar
+            // 
+            this.editar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.editar.Location = new System.Drawing.Point(347, 254);
+            this.editar.Name = "editar";
+            this.editar.Size = new System.Drawing.Size(75, 23);
+            this.editar.TabIndex = 42;
+            this.editar.Text = "Editar";
+            this.editar.UseVisualStyleBackColor = true;
+            this.editar.Click += new System.EventHandler(this.EditButton);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 295);
+            this.ClientSize = new System.Drawing.Size(922, 295);
+            this.Controls.Add(this.editar);
+            this.Controls.Add(this.message);
+            this.Controls.Add(this.civil);
+            this.Controls.Add(this.sangue);
+            this.Controls.Add(this.sexo);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.kids);
             this.Controls.Add(this.name);
@@ -468,9 +547,6 @@
             this.Controls.Add(this.telefone);
             this.Controls.Add(this.endereco);
             this.Controls.Add(this.filhos);
-            this.Controls.Add(this.civil);
-            this.Controls.Add(this.sangue);
-            this.Controls.Add(this.sexo);
             this.Controls.Add(this.idade);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
@@ -485,8 +561,11 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nome);
             this.Controls.Add(this.listBox1);
+            this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Tag = "Sangue";
+            this.Text = "Formulário de Cadastro";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -508,8 +587,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox idade;
-        private System.Windows.Forms.TextBox sangue;
-        private System.Windows.Forms.TextBox civil;
         private System.Windows.Forms.TextBox filhos;
         private System.Windows.Forms.TextBox endereco;
         private System.Windows.Forms.TextBox telefone;
@@ -530,8 +607,12 @@
         private System.Windows.Forms.Label age;
         private System.Windows.Forms.Label name;
         private System.Windows.Forms.Label kids;
-        private System.Windows.Forms.TextBox sexo;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ComboBox sexo;
+        private System.Windows.Forms.ComboBox sangue;
+        private System.Windows.Forms.ComboBox civil;
+        private System.Windows.Forms.Label message;
+        private System.Windows.Forms.Button editar;
     }
 }
 

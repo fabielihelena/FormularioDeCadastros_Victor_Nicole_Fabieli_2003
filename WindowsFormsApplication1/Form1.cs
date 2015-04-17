@@ -13,26 +13,57 @@ using System.Reflection;
 
 namespace WindowsFormsApplication1
 {
-   
+
     public partial class Form1 : Form
     {
-
         List<Funcionario> funcionarios = new List<Funcionario>();
         public string[] lines;
         public string[] newLines;
+        bool roda2 = false;
+
+        public void changeColor(TextBox s,string a)
+        {
+//            string o = string.Empty;
+            foreach (Control d in this.Controls)
+            {
+                if (d is Label)
+                {
+                    if (s.Tag == d.Tag)
+                    {
+                        d.ForeColor = Color.Red;
+                        message.Text = "Preencha todos os campos";
+                    }
+                }
+            }
+            
+        }
+
 
         #region "INICIALIZADOR" 
 
         public Form1()
         {
             InitializeComponent();
-            lines = File.ReadAllLines("Cadastro.txt");
-            
-            for (int i = 0; i < lines.Length; i++)
+            try
             {
-                funcionarios.Add(new Funcionario("","","","","","","","","","",""));
-                funcionarios[i].fromString(lines[i]);
-                listBox1.Items.Add(funcionarios[i].name);
+                lines = File.ReadAllLines("Cadastro.txt");
+                using (StreamReader file = new StreamReader("Cadastro.txt"))
+                {
+                    if (!string.IsNullOrWhiteSpace(file.ReadLine()))
+                    {
+                        for (int i = 0; i < lines.Length; i++)
+                        {
+                            Console.WriteLine(lines);
+                            funcionarios.Add(new Funcionario("", "", "", "", "", "", "", "", "", "", ""));
+                            funcionarios[i].fromString(lines[i]);
+                            listBox1.Items.Add(funcionarios[i].name);
+                        }
+                    }
+                }
+            }
+            catch (ArgumentNullException r) 
+            {
+                File.CreateText("Cadastro.txt");
             }
         }
 
@@ -41,46 +72,47 @@ namespace WindowsFormsApplication1
         #region "ADDMETHOD"
         public void Add(object sender, EventArgs e)
         {
-            string[] expE = ("!a@a#a$a%a¨a&a*a(a)").Split('a');
-            string[] expN = ("1,2,3,4,5,6,7,8,9,0").Split(',');
-            bool roda = true;
-            foreach (Control c in this.Controls)
-            {
-                if (c is TextBox)
+                bool roda = true;
+                message.ForeColor = Color.Red;
+                string[] expE = ("!a@a#a$a%a¨a&a*a(a)").Split('a');
+                string[] expN = ("1,2,3,4,5,6,7,8,9,0").Split(',');
+                for (int i = 0; i < expE.Length; i++)
                 {
-                    TextBox textBox = c as TextBox;
-                    if (textBox == nome || textBox == sexo || textBox == civil || textBox == profissao)
+                    if (idade.Text.Contains(expE[i]))
                     {
-                        for (int i = 0; i < expE.Length; i++)
-                        { if (textBox.Text.Contains(expE[i])) roda = false; }
-                        for (int i = 0; i < expN.Length; i++)
-                        { if (textBox.Text.Contains(expN[i])) roda = false; }
-                    }
-
-                    if (textBox == filhos || textBox == salario || textBox == telefone)
-                    {
-                        for (int i = 0; i < expE.Length; i++)
-                        { if (textBox.Text.Contains(expE[i])) roda = false; }
-                    }
-
-                    if (textBox == sangue)
-                    {
-                        for (int i = 0; i < expN.Length; i++)
-                        { if (textBox.Text.Contains(expN[i])) roda = false; }
-                    }
-
-                    if (textBox.Text == string.Empty)
-                    {
+                        label2.ForeColor = Color.Red;
                         roda = false;
                     }
                 }
-            }
-            if (roda)
-            {
-                funcionarios.Add(new Funcionario(nome.Text, idade.Text, sexo.Text, profissao.Text, civil.Text,
-                    filhos.Text, sangue.Text, email.Text, endereco.Text, salario.Text, telefone.Text));
-                listBox1.Items.Add(nome.Text);
-            }
+                    foreach (Control c in this.Controls)
+                    {
+                        if (c is ComboBox)
+                        {
+                            foreach (Control d in this.Controls)
+                            {
+                                if (d is Label)
+                                {
+                                    if (d.Tag == (c as ComboBox).Tag) d.ForeColor = Color.Red;
+                                }
+                            }
+                        }
+                        if (c is TextBox)
+                        {
+                            TextBox textBox = c as TextBox;
+                            if (string.IsNullOrWhiteSpace(textBox.Text))
+                            {
+                                changeColor(textBox, "Precisa preencher todos os campos");
+                                roda = false;
+                            }
+
+                        }
+                    }
+                    if (roda && roda2)
+                    {
+                        funcionarios.Add(new Funcionario(nome.Text, idade.Text, sexo.Text, profissao.Text, civil.Text,
+                            filhos.Text, sangue.Text, email.Text, endereco.Text, salario.Text, telefone.Text));
+                        listBox1.Items.Add(nome.Text);
+                    }
         }
         #endregion
 
@@ -145,13 +177,157 @@ namespace WindowsFormsApplication1
                 if (r is TextBox)
                 {
                     TextBox textBox = r as TextBox;
-                    if (textBox.Text != "" ) {
+                    if (textBox.Text != "") {
                         textBox.Text = "";
                     }
                 }
             }
         }
         #endregion
+
+        private void pressionouTecla(object sender, KeyPressEventArgs e)
+        {
+            //e.Handled = true;
+            //Console.WriteLine("pressionouTecla");
+            //Console.WriteLine(e.KeyChar);
+            //Console.WriteLine((sender as TextBox).Text);
+            if (e.KeyChar.Equals((char)8))
+            {
+                e.Handled = false;
+            }
+
+            else if (((sender as TextBox) == idade )|| ((sender as TextBox) == filhos) || ((sender as TextBox) == telefone))
+            {
+                string valid = "0123456789";
+                e.Handled = (valid.IndexOf(e.KeyChar) == -1);
+            }
+
+            else if ((sender as TextBox) == nome || (sender as TextBox) == profissao)
+            {
+                string valid = "abcdefghijklmnopqrstuvwxyz ";
+                valid += valid.ToUpper();
+                e.Handled = (valid.IndexOf(e.KeyChar) < 0);
+            }
+
+            else if ((sender as TextBox) == salario)
+            {
+                string valid = "0123456789,";
+                e.Handled = (valid.IndexOf(e.KeyChar) < 0);
+            }
+
+            else if ((sender as TextBox) == endereco)
+            {
+                string valid = "abcdefghijklmnopqrstuvwxyz ";
+                valid += valid.ToUpper();
+                valid += "123456790,";
+                e.Handled = (valid.IndexOf(e.KeyChar) < 0);
+            }
+
+            if (!e.Handled)
+            {
+                foreach (Control d in this.Controls)
+                {
+                    if (d is Label)
+                    {
+                        if ((sender as TextBox).Tag == d.Tag)
+                        {
+                            if (!string.IsNullOrWhiteSpace((sender as TextBox).Text))
+                            {
+                                d.ForeColor = Color.Black;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void indexChanged(object sender, EventArgs e)
+        {
+            if(string.IsNullOrWhiteSpace((sender as ComboBox).Text) )
+            {
+                roda2 = false;
+                foreach (Control d in this.Controls)
+                {
+                    if (d is Label)
+                    {
+                        if (d.Tag == (sender as ComboBox).Tag) d.ForeColor = Color.Red;
+                    }
+                }
+            }
+            else{
+                roda2= true;
+                foreach (Control d in this.Controls)
+                {
+                    if (d is Label)
+                    {
+                        if (d.Tag == (sender as ComboBox).Tag) d.ForeColor = Color.Black;
+                    }
+                }
+            }
+        }
+
+        private void EditButton(object sender, EventArgs e)
+        {
+            for (int j = 0; j < listBox1.Items.Count; j++)
+            {
+                bool i = listBox1.GetSelected(j);
+                if (i)
+                {
+                    if (!string.IsNullOrWhiteSpace(nome.Text))
+                    {
+                        funcionarios[j].name = nome.Text;
+                        listBox1.Items[j] = nome.Text;
+                    }
+                    if (!string.IsNullOrWhiteSpace(idade.Text))
+                    {
+                        funcionarios[j].age = idade.Text;
+                    }
+                    if (!string.IsNullOrWhiteSpace(filhos.Text))
+                    {
+                        funcionarios[j].kids = filhos.Text;
+                    }
+                    if (!string.IsNullOrWhiteSpace(endereco.Text))
+                    {
+                        funcionarios[j].adress = endereco.Text;
+                    }
+                    if (!string.IsNullOrWhiteSpace(telefone.Text))
+                    {
+                        funcionarios[j].cellphone = telefone.Text;
+                    }
+                    if (!string.IsNullOrWhiteSpace(profissao.Text))
+                    {
+                        funcionarios[j].job = profissao.Text;
+                    }
+                    if (!string.IsNullOrWhiteSpace(email.Text))
+                    {
+                        funcionarios[j].email = email.Text;
+                    }
+                    if (!string.IsNullOrWhiteSpace(salario.Text))
+                    {
+                        funcionarios[j].money = salario.Text;
+                    }
+                    if (!string.IsNullOrWhiteSpace(sexo.Text))
+                    {
+                        funcionarios[j].sex = sexo.Text;
+                    }
+                    if (!string.IsNullOrWhiteSpace(sangue.Text))
+                    {
+                        funcionarios[j].AOB = sangue.Text;
+                    }
+                    if (!string.IsNullOrWhiteSpace(civil.Text))
+                    {
+                        funcionarios[j].civilState = civil.Text;
+                    }
+                }
+
+            }
+
+        }
     }
     
 }

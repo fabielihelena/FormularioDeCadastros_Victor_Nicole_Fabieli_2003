@@ -24,12 +24,13 @@ namespace WindowsFormsApplication1
 
        public  string asString()
         {
-            return name + "#" + age + "#" + sex + "#" + job + "#" + civilState + "#" + kids + "#" + AOB + "#" + email + "#" + adress + "#" + money + "#" + cellphone;
+            return name + "?" + age + "?" + sex + "?" + job + "?" + civilState + "?" + kids + "?" + AOB + "?" + email + "?" + adress + "?" + money + "?" + cellphone;
         }
 
         public void fromString(string data)
         {
-            string[] info = data.Split('#');
+            string[] info = data.Split('?');
+            
             name = info[0];
             age = info[1];
             sex = info[2];
